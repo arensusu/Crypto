@@ -7,6 +7,10 @@ const mintButton = document.getElementById("mintButton");
 mintButton.onclick = mint;
 const balanceButton = document.getElementById("balanceButton");
 balanceButton.onclick = balance;
+const contractBalanceButton = document.getElementById("contractBalance");
+contractBalanceButton.onclick = contractBalance;
+const withdrawButton = document.getElementById("withdraw");
+withdrawButton.onclick = withdraw;
 
 async function connect() {
     console.log("connecting");
@@ -14,7 +18,7 @@ async function connect() {
         try {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             await provider.send("eth_requestAccounts", []);
-            
+
             const signer = provider.getSigner();
             const signerAddress = await signer.getAddress();
             connectButton.innerHTML = signerAddress;
@@ -34,7 +38,7 @@ async function mint() {
 
             const signer = await provider.getSigner();
             const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-            
+
             const mintValue = document.getElementById("mint value").value;
             const cost = parseInt(mintValue) / 10;
             await contract.mint(ethers.utils.parseEther(mintValue), { value: ethers.utils.parseEther(cost.toString()) });
@@ -61,7 +65,40 @@ async function balance() {
             balanceButton.after(balanceInfo);
         }
         catch (error) {
-            console.log(error)
+            console.log(error);
+        }
+    }
+}
+
+async function contractBalance() {
+    if (typeof window.ethereum !== "undefined") {
+        try {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const balance = await provider.getBalance(CONTRACT_ADDRESS);
+
+            let balanceText = document.createElement("span");
+            balanceText.innerHTML = ethers.utils.formatEther(balance);
+            contractBalanceButton.after(balanceText);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+async function withdraw() {
+    if (typeof window.ethereum !== "undefined") {
+        try {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            await provider.send("eth_requestAccounts", []);
+
+            const signer = await provider.getSigner();
+            const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+            await contract.withdraw();
+        }
+        catch (error) {
+            console.log(error);
         }
     }
 }
