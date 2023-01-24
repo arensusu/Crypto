@@ -4,6 +4,6 @@ WORKDIR /crypto
 
 ADD ../ /crypto
 
-RUN yarn
+RUN yarn install
 
 CMD [ "/bin/bash" ]
