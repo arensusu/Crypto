@@ -8,6 +8,7 @@ export default function SusuToken() {
     const { isWeb3Enabled } = useMoralis()
 
     const [totalSupply, setTotalSupply] = useState("0")
+    const [contractBalance, setContractBalance] = useState("0")
 
     const { runContractFunction: getTotalSupply } = useWeb3Contract({
         abi: abi,
@@ -16,7 +17,15 @@ export default function SusuToken() {
         params: {}
     })
 
-    const { runContractFunction: mintNewToken } = useWeb3Contract()
+    const { runContractFunction: mintToken } = useWeb3Contract()
+    const { runContractFunction: burnToken } = useWeb3Contract()
+
+    const { runContractFunction: withdraw } = useWeb3Contract({
+        abi: abi,
+        contractAddress: contractAddress,
+        functionName: "withdraw",
+        params: {}
+    })
 
     useEffect(function () {
         updateUI()
@@ -26,6 +35,10 @@ export default function SusuToken() {
         if (isWeb3Enabled) {
             const totalSupplyFromCall = ethers.utils.formatEther(await getTotalSupply()).toString()
             setTotalSupply(totalSupplyFromCall)
+
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const contractBalanceFromCall = await provider.getBalance(contractAddress)
+            setContractBalance(ethers.utils.formatEther(contractBalanceFromCall).toString())
         }
     }
 
@@ -46,9 +59,9 @@ export default function SusuToken() {
                         contractAddress: contractAddress,
                         functionName: "mint",
                         msgValue: ethers.utils.parseEther(mintCostFromInput).toString(),
-                        params: { _amount: ethers.utils.parseEther(mintAmountFromInput).toString() }
+                        params: { _amount: ethers.utils.parseEther(mintAmountFromInput) }
                     }
-                    await mintNewToken({onSuccess: async (tx) => {
+                    await mintToken({onSuccess: async (tx) => {
                         await tx.wait(1)
                         updateUI()
                     }, params: options})
@@ -58,12 +71,37 @@ export default function SusuToken() {
             <div>
                 <span>Burn: </span>
                 <input id="burn value" />
-                <button id="burnButton">Burn</button>
+                <button onClick={async () => {
+                    const burnAmountFromInput = document.getElementById("burn value").value
+
+                    const options = {
+                        abi: abi,
+                        contractAddress: contractAddress,
+                        functionName: "burn",
+                        params: { _amount: ethers.utils.parseEther(burnAmountFromInput) }
+                    }
+                    await burnToken({
+                        params: options,
+                        onSuccess: async (tx) => {
+                            await tx.wait(1)
+                            updateUI()
+                        }
+                    })
+
+                    document.getElementById("burn value").value = ""
+                }}>Burn</button>
             </div>
             <div>
-                <button id="contractBalance">Contract Balance</button>
+                <span>Contract Balance: {contractBalance}</span>
                 <div>
-                    <button id="withdraw">Withdraw</button>
+                    <button onClick={async () => {
+                        await withdraw({
+                            onSuccess: async (tx) => {
+                                await tx.wait(1)
+                                updateUI()
+                            }
+                        })
+                    }}>Withdraw</button>
                 </div>
             </div>
         </>
