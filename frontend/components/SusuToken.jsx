@@ -2,10 +2,11 @@ import { useState, useEffect } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { ethers } from "ethers"
 import abi from "constants/abi"
-import contractAddress from "constants/contractAddress"
+import contractAddresses from "constants/contractAddresses"
 
 export default function SusuToken() {
-    const { isWeb3Enabled } = useMoralis()
+    const { isWeb3Enabled, chainId } = useMoralis()
+    const contractAddress = parseInt(chainId) in contractAddresses ? contractAddresses[parseInt(chainId)][0] : null
 
     const [totalSupply, setTotalSupply] = useState("0")
     const [contractBalance, setContractBalance] = useState("0")
@@ -52,7 +53,7 @@ export default function SusuToken() {
                 <input id="mint value" />
                 <button onClick={async () => {
                     const mintAmountFromInput = document.getElementById("mint value").value
-                    const mintCostFromInput = (parseInt(mintAmountFromInput) / 10).toString()
+                    const mintCostFromInput = (parseInt(mintAmountFromInput) / 1e9).toString()
 
                     const options = {
                         abi: abi,

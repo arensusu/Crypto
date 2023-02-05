@@ -4,6 +4,7 @@ coverage
 coverage.json
 typechain
 typechain-types
+deployments
 
 # Hardhat files
 cache
@@ -17,14 +18,14 @@ artifacts
 .pnp.js
 
 # testing
-/coverage
+coverage
 
 # next.js
-/.next/
-/out/
+.next/
+out/
 
 # production
-/build
+build
 
 # misc
 .DS_Store

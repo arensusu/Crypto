@@ -9,7 +9,7 @@ contract SusuToken is ERC20 {
 
     // Initialize the contract with the token metadata
     constructor() ERC20("SusuToken", "SST") {
-        _mint(msg.sender, 1000 ether);
+        _mint(msg.sender, 1e18 ether);
         owner = msg.sender;
     }
 
@@ -19,7 +19,7 @@ contract SusuToken is ERC20 {
     }
 
     function mint(uint256 _amount) external payable {
-        require(msg.value * 10 == _amount);
+        require(msg.value * 1e9 == _amount);
         _mint(msg.sender, _amount);
     }
 
