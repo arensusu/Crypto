@@ -1,10 +1,8 @@
-import Head from "next/head";
-import { useMoralis } from "react-moralis";
-
 import Navibar from "../components/navibar";
+import { useMoralis } from "react-moralis";
+import Head from "next/head";
 
-export default function Home() {
-    const { isWeb3Enabled } = useMoralis();
+export default function DEX() {
     return (
         <>
             <Head>
@@ -12,7 +10,9 @@ export default function Home() {
             </Head>
             <body>
                 <Navibar></Navibar>
-                <div>Welcome!</div>
+                <div>
+                    DEX
+                </div>
             </body>
         </>
     );

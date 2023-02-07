@@ -45,13 +45,13 @@ export default function SusuToken() {
 
     return (
         <>
-            <div>
-                <span>Total Supply: {totalSupply}</span>
+            <div className="flex">
+                <span className="font-mono pb-4 pl-4 text-xl">Total Supply: {totalSupply}</span>
             </div>
-            <div>
-                <span>Mint: </span>
-                <input id="mint value" />
-                <button onClick={async () => {
+            <div className="flex space-x-2 pl-4 pb-4">
+                <span className="font-mono text-lg">Mint: </span>
+                <input type="text" className="border border-purple-200 rounded-md bg-purple-100 pl-2" id="mint value" />
+                <button className="font-mono border-2 border-purple-500 px-2 bg-purple-400" onClick={async () => {
                     const mintAmountFromInput = document.getElementById("mint value").value
                     const mintCostFromInput = (parseInt(mintAmountFromInput) / 1e9).toString()
 
@@ -69,10 +69,10 @@ export default function SusuToken() {
                     document.getElementById("mint value").value = ""
                 }}>Mint</button>
             </div>
-            <div>
-                <span>Burn: </span>
-                <input id="burn value" />
-                <button onClick={async () => {
+            <div className="flex space-x-2 pl-4 pb-4">
+                <span className="font-mono text-lg">Burn: </span>
+                <input className="border border-purple-200 rounded-md bg-purple-100 pl-2" id="burn value" />
+                <button className="font-mono border-2 border-purple-500 px-2 bg-purple-400" onClick={async () => {
                     const burnAmountFromInput = document.getElementById("burn value").value
 
                     const options = {
@@ -92,10 +92,10 @@ export default function SusuToken() {
                     document.getElementById("burn value").value = ""
                 }}>Burn</button>
             </div>
-            <div>
-                <span>Contract Balance: {contractBalance}</span>
+            <div className="flex space-x-2 pl-4 pb-4">
+                <span className="font-mono text-lg">Contract Balance: {contractBalance}</span>
                 <div>
-                    <button onClick={async () => {
+                    <button className="font-mono border-2 border-purple-500 px-2 bg-purple-400" onClick={async () => {
                         await withdraw({
                             onSuccess: async (tx) => {
                                 await tx.wait(1)
