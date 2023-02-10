@@ -7,7 +7,6 @@ contract SusuToken is ERC20 {
 
     address private immutable owner;
 
-    // Initialize the contract with the token metadata
     constructor() ERC20("SusuToken", "SST") {
         _mint(msg.sender, 1e18 ether);
         owner = msg.sender;
