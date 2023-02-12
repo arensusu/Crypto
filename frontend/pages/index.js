@@ -10,10 +10,8 @@ export default function Home() {
             <Head>
                 <title>Blockchain Project</title>
             </Head>
-            <body>
-                <Navibar></Navibar>
-                <div>Welcome!</div>
-            </body>
+            <Navibar></Navibar>
+            <div>Welcome!</div>
         </>
     );
 }

@@ -11,18 +11,16 @@ export default function Token() {
             <Head>
                 <title>Blockchain Project</title>
             </Head>
-            <body>
-                <Navibar></Navibar>
-                <div>
-                    {isWeb3Enabled ? (
-                        <SusuToken />
-                    ) : (
-                        <div className="pl-8 text-2xl">
-                            Please connect to supported Chain.
-                        </div>
-                    )}
-                </div>
-            </body>
+            <Navibar></Navibar>
+            <div>
+                {isWeb3Enabled ? (
+                    <SusuToken />
+                ) : (
+                    <div className="pl-8 text-2xl">
+                        Please connect to supported Chain.
+                    </div>
+                )}
+            </div>
         </>
     );
 }

@@ -8,12 +8,10 @@ export default function DEX() {
             <Head>
                 <title>Blockchain Project</title>
             </Head>
-            <body>
-                <Navibar></Navibar>
-                <div>
-                    DEX
-                </div>
-            </body>
+            <Navibar></Navibar>
+            <div>
+                DEX
+            </div>
         </>
     );
 }
