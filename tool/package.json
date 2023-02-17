@@ -1,0 +1,11 @@
+{
+  "name": "tool",
+  "version": "1.0.0",
+  "main": "gasTracker.js",
+  "author": "Susu Ko <willy9966@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@line/bot-sdk": "^7.5.2",
+    "dotenv": "^16.0.3"
+  }
+}
